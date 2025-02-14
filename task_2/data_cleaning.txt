@@ -1,0 +1,82 @@
+
+-- Steps to clean data
+-- Assuming you don't need to explode a column that contains JSON or XML
+
+1. Load & Inspect
+- Load the CSV into MySQL
+- Check row counts, column names, and data types
+
+2. Clean Missing / Invalid Values
+- Identify nulls in latitude, longitude, category, number_of_tradies, estimated_size, number_of_impressions, accepted
+- Decide whether to impute, drop, or otherwise handle missing values
+
+3. Check for and clean for Outliers
+- Look for extreme values in estimated_size, number_of_tradies, or number_of_impressions
+- Decide whether to cap, remove, or keep them based on domain knowledge
+
+
+4. Enhance data
+- Add extract features to data to check acceptance patterns later
+- Fields to add include: hour of day, day of week, month, and weekend vs. weekday (boolean)
+
+
+5. Extract Cleaned Data for Further Manipulation
+- Extract cleaned data as .csv to be used for further manipulation by Tableau, Python, etc.
+
+--
+
+Extended logic for 2. Clean Missing / Invalid Values
+
+Step 1: Assess the Frequency of Missing Values
+If the percentage is:
+- Less than 5%: Proceed to Step 2
+- Greater than 5% and critical to analysis: Consider imputation (Step 3)
+- Greater than 5% and not critical to analysis: Consider deletion (Step 4) or imputation (Step 3)
+
+
+Step 2: Assess the Distribution of Missing Values
+Check if the missing values are:
+- Randomly scattered: Proceed to Step 3
+- Concentrated in specific rows or columns: Consider deletion (Step 4)
+
+Step 3: Imputation
+If the missing values are in a:
+- Numerical column: Replace with the mean or median value
+- Categorical column: Replace with the most frequent category
+- Datetime column: Replace with the median or mode value
+
+Step 4: Deletion
+If the missing values are:
+- Concentrated in specific rows: Consider deleting those rows
+- Concentrated in specific columns: Consider deleting those columns
+
+--
+
+Extended Logic for 3. Check for and Clean Outliers
+
+Step 1: Assess the Frequency of Outliers
+If the percentage of outliers is:
+- Less than 1%: Proceed to Step 2
+- Between 1% and 5%: Consider capping (Step 3) or removal (Step 4)
+- Greater than 5%: Consider removal (Step 4) or transformation (Step 5)
+
+Step 2: Assess the Distribution of Outliers
+Check if the outliers are:
+- Randomly scattered: Proceed to Step 3
+- Concentrated in specific rows or columns: Consider removal (Step 4)
+
+Step 3: Capping
+If the outliers are in a:
+- Numerical column: Cap at the 95th percentile or 3 standard deviations from the mean
+- Categorical column: Not applicable
+- Datetime column: Not applicable
+
+Step 4: Removal
+If the outliers are:
+- Concentrated in specific rows: Delete these rows
+- Concentrated in specific columns: Consider deleting those columns
+- Causing significant skewness or bias: Remove them
+
+Step 5: Transformation
+If the outliers are:
+- Causing significant skewness or bias: Apply transformations (e.g., log, square root)
