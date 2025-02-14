@@ -1,0 +1,15 @@
+Table 1: User
+UserID: INT(10) - Primary Key
+Name: VARCHAR(45)
+
+Table 2: Messages
+MessageID: INT(10) - Primary Key
+UserIDSender: INT(10)
+UserIDRecipient: INT(10)
+MessageContent: TEXT
+ThreadID: INT(10)
+DateSent: DATETIME
+
+Table 3: Threads
+ThreadID: INT(10) - Primary Key
+Subject: VARCHAR(45)
