@@ -1,3 +1,5 @@
+-- The total number of messages sent stratified by weekday
+
 SELECT 
     DAYNAME(m.dateSent) AS weekday,
     COUNT(*) AS total_messages

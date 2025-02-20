@@ -1,5 +1,5 @@
--- Task 1: 4th Query
--- For the conversation with the most messages: all user data and message contents ordered chronologically so one can follow the whole conversation
+-- For the conversation with the most messages: all user data and message contents ordered
+-- chronologically so one can follow the whole conversation
 
 SELECT 
     t.ThreadID,
@@ -20,6 +20,7 @@ JOIN Users uRecipient
     ON m.UserIDRecipient = uRecipient.UserID
 WHERE t.ThreadID = (
 -- Sub-query to find conversation with the most messages
+-- could have also used a CTE at the start (e.g. With MostMessages ( ))
     SELECT t2.ThreadID
     FROM Threads t2
     JOIN Messages m2 ON t2.ThreadID = m2.ThreadID
